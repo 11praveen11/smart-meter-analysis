@@ -27,4 +27,4 @@ jobs:
       uses: actions/upload-artifact@v4 # FIXED: Updated to v4
       with:
         name: analysis-plots
-        path: customer_clusters.png
+        path: "*.png"
