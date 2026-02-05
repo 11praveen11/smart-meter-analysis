@@ -1,33 +1,30 @@
 name: Run Smart Meter Analysis
 
 on:
-  push:
-    branches: [ "main" ]
-  workflow_dispatch: # Adds a manual "Run" button
+  workflow_dispatch: # Allows you to run it manually with a button
 
 jobs:
-  analyze_data:
+  build:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
 
-      - name: Install Libraries
-        run: |
-          pip install pandas numpy matplotlib seaborn scikit-learn
+    - name: Install dependencies
+      run: |
+        pip install pandas numpy matplotlib seaborn scikit-learn
 
-      - name: Run Python Script
-        run: python smart_meter.py
+    - name: Run Script
+      run: python smart_meter.py
 
-      - name: Upload Plot Image
-        # This step saves the image so you can download/view it
-        uses: actions/upload-artifact@v3
-        with:
-          name: Analysis-Result-Plot
-          path: customer_clusters.png
+    - name: Upload Results
+      uses: actions/upload-artifact@v3
+      with:
+        name: analysis-plots
+        path: customer_clusters.png # This matches the filename in your script
